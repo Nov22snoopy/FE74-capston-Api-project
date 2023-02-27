@@ -15,17 +15,43 @@
 
 <body>
 
+
     <div class="container">
         <h2>Quản trị</h2>
-        <div class="col-md-4">
-            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">
-                Thêm mới
-            </button>
-        </div>
-        <br>
-        <div class="col-md-8">
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
-        </div>
+             <div class="row">
+                <div class="col-md-8">
+                  <!-- BEGIN BUTTOM THÊM MỚI -->
+                  <button
+                    id="btnThemSP"
+                    class="btn btn-success"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                  >
+                    
+                    Thêm Mới
+                  </button>
+                  <!-- END BUTTON THÊM MỚI -->
+                </div>
+                <div class="col-md-4">
+                  <!-- BEGIN TÌM KIẾM -->
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Nhập từ khóa"
+                      aria-label="Recipient's username"
+                      aria-describedby="basic-addon2"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2"
+                        ><i class="fa fa-search"></i
+                      ></span>
+                    </div>
+                  </div>
+                  <!-- END TÌM KIẾM -->
+                </div>
+              </div>
+              <div class="clear-fix"></div>
         <br>
         <div class="tblSanPham" id="tblSanPham">
             <table class="table table-bordered">
@@ -59,11 +85,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Tên Sản Phẩm</label>
-                            <input id="TenSP" class="form-control" placeholder="Nhập vào tên sản phẩm" />
+                            <input id="name" class="form-control" placeholder="Nhập vào tên sản phẩm" />
                         </div>
                         <div class="form-group">
                             <label>Giá</label>
-                            <input id="GiaSP" class="form-control" placeholder="Nhập vào giá" />
+                            <input id="price" class="form-control" placeholder="Nhập vào giá" />
                         </div>
                         <div class="form-group">
                             <label>Screen</label>
@@ -71,21 +97,21 @@
                         </div>
                         <div class="form-group">
                             <label>Back Camera</label>
-                            <input id="bCamera" 
+                            <input id="backCamera" 
                             class="form-control"
                              placeholder="Nhập vào Back Camera" />
                         </div>
                         <div class="form-group">
                             <label>Front Camera</label>
-                            <input id="fCamera" 
+                            <input id="frontCamera" 
                             class="form-control" 
                             placeholder="Nhập vào Front Camera" />
                         </div>
                         <div class="form-group">
                             <label>Hình Ảnh</label>
-                            <input id="HinhSP" type="file" class="form-control" placeholder="Nhập vào hình sản phẩm" />
+                            <input id="img" type="file" class="form-control" placeholder="Nhập vào hình sản phẩm" />
                         </div>
-                        <div class="form-group" id="MoTa">
+                        <div class="form-group" id="desc">
                             <label for="">Mo ta </label>
 
                             <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
