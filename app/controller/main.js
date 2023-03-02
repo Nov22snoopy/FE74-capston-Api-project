@@ -1,7 +1,6 @@
 let callApi = new CallApi()
-getDataList()
-let cart = new Cart();
-let productList = [];
+getDataList();
+let cart = [];
 /**
  * function get data from Api
  */
@@ -109,7 +108,6 @@ function addDetail(id) {
   callApi
     .findProduct(id)
     .then(function(result){
-      console.log("Item Added: ", result.data);
       let product = new Product(
         result.data.id,
         result.data.name,
@@ -119,15 +117,30 @@ function addDetail(id) {
         result.data.frontCamera,
         result.data.img,
         result.data.desc,
-        result.data.type
+        result.data.type,
+        1,
       )
-      productList.push(product)
-      renderCart(productList)
+      console.log(product);
+        addToCart(product);
+        renderCart(cart)
     })
     .catch(function(error){
       console.log(error);
     })
 };
+
+
+function addToCart (product) {
+  for(let i = 0; i < cart.length; i++){
+    if (product.id === cart[i].id) {
+      product[i].count++
+      console.log(cart);
+    }
+
+  }
+  cart.push(product)
+  console.log(cart);
+}
 
 
 function renderCart(data) {
