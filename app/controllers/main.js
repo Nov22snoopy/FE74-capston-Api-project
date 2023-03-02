@@ -28,8 +28,10 @@ getListProduct();
 <img scr="./img/${product.img} " width = "50""/>
 <td>${product.desc}</td>
 <td>${product.type}</td>
-</td>
+<td>
 <button class="btn btn-info" data-toggle="modal" data-target="#myModal" onclick="handleEdit(${product.id})">Edit</button>
+</td>
+<td>
 <button class="btn btn-danger" onclick="handleDelete(${product.id})">Delete</button>
 </td>
 </tr>
@@ -61,6 +63,7 @@ getListProduct();
     callApi.getProductById(id)
     .then(function(result){
         var product = result.data;
+    //    dom toi cac the input show value
         getEle("name").value = product.name;
         getEle("price").value = product.price;
         getEle("screen").value = product.screen;
