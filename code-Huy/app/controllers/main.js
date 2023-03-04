@@ -1,4 +1,5 @@
 var callApi = new CallApi();
+var validation = new Validation();
 function getEle(id) {
     return document.getElementById(id);
 }
@@ -42,10 +43,10 @@ function renderData(data) {
 function handleDelete(id) {
     console.log(id);
     callApi.deleteProduct(id)
-        .then(function(result){
+        .then(function (result) {
             getListProduct()
         })
-        .catch(function(result){
+        .catch(function (result) {
             console.log(result);
         })
 }
@@ -94,7 +95,7 @@ function handleUpdate(id) {
     if (!img) {
         img = hinhAnhFromServer;
     }
-    var product = new Product(id , name, price, screen, backCamera, frontCamera, img, desc, type);
+    var product = new Product(id, name, price, screen, backCamera, frontCamera, img, desc, type);
     callApi.updateProduct(product)
         .then(function (result) {
             console.log(result.data);
@@ -127,4 +128,52 @@ function handleAdd() {
         }).catch(function (error) {
             console.log(error);
         });
+}
+// Lay thong tin 
+function layThongTin(isAdd) {
+    var name = getEle("name").value;
+    var price = getEle("price").value;
+    var screen = getEle("screen").value;
+    var backCamera = getEle("backCamera").value;
+    var frontCamera = getEle("frontCamera").value;
+    var desc = getEle("desc").value;
+    var type = getEle("type").value;
+
+    // validation
+    var isValid = true;
+    // name
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(name, "tbName", "(*) Vui long nhap ten san pham");
+    }
+    // price
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(price, "tbPrice", "(*) Vui long nhap gia tien san pham");
+    }
+    // screen
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(screen, "tbScreen", "(*) Vui long nhap screen san pham");
+    }
+    // backCamera
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(backCamera, "tbBackCamera", "(*) Vui long nhap backCamera san pham");
+    }
+    // frontCamera
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(frontCamera, "tbFrontCamera", "(*) Vui long nhap frontCamera san pham");
+    }
+    // desc
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(desc, "tbDesc", "(*) Vui long nhap Desc san pham");
+    }
+    //    type
+    if (isAdd) {
+        isValid &=
+            validation.kiemTraRong(type, "tbType", "(*) Vui long nhap type san pham");
+    }
 }
