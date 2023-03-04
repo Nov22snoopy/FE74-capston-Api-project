@@ -4,6 +4,9 @@
   font-size: 16px;
   box-sizing: border-box;
 }
+* .modal-dialog {
+  max-width: 800px !important;
+}
 
 header {
   width: 100%;

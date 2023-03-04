@@ -1,7 +1,6 @@
 let callApi = new CallApi()
-getDataList()
-let cart = new Cart();
-let productList = [];
+getDataList();
+let cart = [];
 /**
  * function get data from Api
  */
@@ -74,7 +73,7 @@ function viewDetail(id) {
  * @param {*} data 
  */
 function renderProductDetail(data) {
-  let addBtn  = `<button class="btn btn-success" onclick="addDetail('${data.id}')">Add to cart</button>`;
+  let addBtn = `<button class="btn btn-success" onclick="addDetail('${data.id}')">Add to cart</button>`;
   let detailHTML =
     `
     <div class="row">
@@ -108,38 +107,127 @@ function renderProductDetail(data) {
 function addDetail(id) {
   callApi
     .findProduct(id)
-    .then(function(result){
-      console.log("Item Added: ", result.data);
-      let product = new Product(
-        result.data.id,
-        result.data.name,
-        result.data.price,
-        result.data.screen,
-        result.data.backCamera,
-        result.data.frontCamera,
-        result.data.img,
-        result.data.desc,
-        result.data.type
-      )
-      productList.push(product)
-      renderCart(productList)
+    .then(function (result) {
+
+      addToCart(result.data.id, result.data.name, result.data.price, result.data.img);
+      renderCart(cart)
     })
-    .catch(function(error){
+    .catch(function (error) {
       console.log(error);
     })
 };
 
+/**
+ * add product to cart
+ * @param {*} data 
+ * @returns 
+ */
+function addToCart(id, name, price ,img) {
+  var product = new Product(id, name, price, 1 ,img)
 
+  for (let i in cart) {
+    if (cart[i].id === product.id) {
+      cart[i].count++;
+      return
+    }
+  }
+  cart.push(product)
+};
+
+function removeCart(id){
+  for(let i in cart) {
+    if(cart[i].id === id) {
+      cart[i].count --;
+      if(cart[i].count === 0) {
+        cart.splice(i, 1);
+      }
+      break;
+    }
+}
+};
+
+function removeCartAll(id){
+  for (let i in cart){
+    if (cart[i].id === id){
+      cart.splice(i, 1);
+    }
+    break;
+  }
+}
+
+/**
+ * total count in cart
+ * @returns 
+ */
+function totalCount() {
+  var totalCount = 0;
+  for (var i in cart) {
+    totalCount += cart[i].count;
+  }
+  return totalCount;
+};
+
+
+
+/**
+ * render table cart
+ * @param {*} data 
+ */
 function renderCart(data) {
+  let cart = [];
+  cart = data;
+  console.log(cart.length);
   let contentHTML = "";
-  for(let i = 0; i < data.length; i++) {
-    contentHTML += 
-    `
+  if(cart.length == 0){
+    contentHTML = `
     <tr>
-      <td>${data[i].name}</td>
-      <td>${data[i].price}</td>
+      <td colspan="4">
+        <p style="font-size: 18px;">"Your cart is empty"</p>
+      </td>
     </tr>
-    `  
+    `
+  }
+  for (let i = 0; i < cart.length; i++) {
+    contentHTML +=
+      `
+    <tr>
+      <td class="pt-3 pb-3"><img src="${cart[i].img}" alt="" width = 100px></td>
+      <td class="">${cart[i].name}</td>
+      <td class="">${cart[i].price}</td>
+      <td class="">
+        <span>
+          <button class="btn btn-secondary" onclick="minusItem('${cart[i].id}')">-</button>
+            ${cart[i].count}
+          <button class="btn btn-secondary" onclick="plusItem('${cart[i].id}','${cart[i].name}','${cart[i].price}')">+</button>  
+        <span>
+      </td>
+      <td>
+        <button class="btn btn-danger" onclick="deleteItem('${cart[i].id}')">Delete</button>
+      </td>
+    </tr>
+    `
   };
   document.getElementById("renderCart").innerHTML = contentHTML;
 }
+
+/**
+ * Plus item in cart
+ * @param {*} id 
+ * @param {*} name 
+ * @param {*} price 
+ */
+function plusItem(id, name, price){
+  addToCart(id, name, price);
+  renderCart(cart)
+};
+
+function minusItem(id) {
+  removeCart(id)
+  renderCart(cart)
+};
+
+function deleteItem(id) {
+  removeCartAll(id);
+  renderCart(cart)
+};
+
