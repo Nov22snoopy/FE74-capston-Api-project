@@ -22,7 +22,21 @@ header h1 {
   color: red;
 }
 header .navbar-dark .navbar-nav .nav-item {
+  position: relative;
   margin-right: 50px;
+}
+header .navbar-dark .navbar-nav .nav-item .cart-btn {
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 30px;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 50%;
 }
 header .navbar-dark .navbar-nav .nav-item .nav-link {
   color: white;
